@@ -1,0 +1,18 @@
+# 测试环境 S3 桶变量示例
+
+aws_region         = "cn-north-1"   # AWS区域（如北京：cn-north-1）
+bucket_name        = "my-test-bucket" # S3桶名称，需全局唯一
+force_destroy      = true            # 是否允许强制销毁桶（true时删除桶会自动删除所有对象，测试环境建议为true）
+tags               = { env = "test" } # 资源标签，便于管理和区分环境
+block_public_access = false          # 是否阻止公有访问（true为私有，false为允许公网访问，测试环境可为false）
+public_access      = true            # 是否允许公网访问（true为公网，false为私有，测试环境可为true）
+enable_versioning  = false           # 是否开启版本控制（测试环境可关闭，节省成本）
+enable_encryption  = false           # 是否开启加密（测试环境可关闭，节省成本）
+sse_algorithm      = "AES256"        # 加密算法（可选：AES256 或 aws:kms）
+kms_key_id         = ""              # KMS密钥ID（仅当sse_algorithm为aws:kms时填写）
+enable_logging     = false           # 是否开启访问日志（测试环境可关闭）
+logging_bucket     = ""              # 日志目标桶名称（如需日志，需提前创建）
+logging_prefix     = "logs/"         # 日志前缀（日志文件在目标桶中的路径前缀）
+enable_lifecycle   = false           # 是否开启生命周期管理（测试环境可关闭）
+allowed_iam_arns   = ["arn:aws:iam::123456789012:user/myuser"] # 允许访问的IAM用户/角色ARN列表（仅私有模式下生效）
+enable_monitoring  = false           # 是否启用S3监控指标（true为启用，false为关闭）

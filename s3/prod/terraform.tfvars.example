@@ -1,0 +1,22 @@
+# 生产环境 S3 桶变量示例
+
+aws_region         = "cn-north-1"   # AWS区域（如北京：cn-north-1）
+bucket_name        = "my-prod-bucket" # S3桶名称，需全局唯一
+force_destroy      = false           # 是否允许强制销毁桶（true时删除桶会自动删除所有对象，建议生产环境为false）
+tags               = { env = "prod" } # 资源标签，便于管理和成本归集
+block_public_access = true           # 是否阻止公有访问（true为私有，false为允许公网访问，建议生产环境为true）
+public_access      = false           # 是否允许公网访问（true为公网，false为私有，建议生产环境为false）
+enable_versioning  = true            # 是否开启版本控制（建议生产环境开启，防止数据丢失）
+enable_encryption  = true            # 是否开启加密（建议生产环境开启，保护数据安全）
+sse_algorithm      = "AES256"        # 加密算法（可选：AES256 或 aws:kms）
+kms_key_id         = ""              # KMS密钥ID（仅当sse_algorithm为aws:kms时填写）
+enable_logging     = true            # 是否开启访问日志（建议生产环境开启，便于审计）
+logging_bucket     = "my-log-bucket" # 日志目标桶名称（需提前创建，存放访问日志）
+logging_prefix     = "logs/"         # 日志前缀（日志文件在目标桶中的路径前缀）
+enable_lifecycle   = true            # 是否开启生命周期管理（建议开启，自动归档/清理数据）
+enable_replication = false           # 是否开启跨区复制（如需灾备可开启，需配置目标桶和角色）
+replication_role_arn = ""            # 复制角色ARN（仅enable_replication为true时需填写）
+replication_dest_arn = ""            # 复制目标桶ARN（仅enable_replication为true时需填写）
+allowed_iam_arns   = ["arn:aws:iam::123456789012:user/myuser"] # 允许访问的IAM用户/角色ARN列表（私有模式下生效）；allowed_iam_arns只在S3桶是“私有模式”时生效，用来指定哪些AWS账号可以访问你的桶。
+如果是“公网模式”，所有人都能访问，不需要也不会用到allowed_iam_arns。
+enable_monitoring  = true            # 是否启用S3监控指标（true为启用，false为关闭）
