@@ -1,7 +1,7 @@
 # aws-auto-deploy
 
 ## 项目简介
-本项目通过Terraform自动化部署通用的AWS S3对象存储桶，分别为生产环境和测试环境提供独立的基础设施代码，支持合规、高可用、高稳定性配置，并可通过配置项灵活开启/关闭各项功能。
+本项目通过Terraform自动化部署通用的AWS S3对象存储桶、EFS文件存储等，分别为生产环境和测试环境提供独立的基础设施代码，支持合规、高可用、高稳定性配置，并可通过配置项灵活开启/关闭各项功能。
 
 ---
 
@@ -15,9 +15,7 @@
 ```
 aws-auto-deploy/
   s3/
-    prod/    # 生产环境Terraform代码
-    test/    # 测试环境Terraform代码
-    README.md
+  efs/
 ```
 
 ---
@@ -26,7 +24,7 @@ aws-auto-deploy/
 ### 前置条件：
 - 安装Terraform
 
-### 1. 进入对应环境目录
+### 1. 以s3桶为例进入对应环境目录【详细可见对应功能目录下README.md文件】
 - 生产环境：`cd s3/prod`
 - 测试环境：`cd s3/test`
 
@@ -39,12 +37,6 @@ terraform init
 terraform plan
 terraform apply
 ```
-
----
-## 参考文档：
-- [terraform官方文档](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
-- [AWS S3官方文档](https://docs.aws.amazon.com/zh_cn/AmazonS3/latest/userguide/Welcome.html)
-- [AWS S3 Metrics and dimensions](https://docs.aws.amazon.com/AmazonS3/latest/userguide/metrics-dimensions.html#s3-metrics-storage)
 
 ---
 

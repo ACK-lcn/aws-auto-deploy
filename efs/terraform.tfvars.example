@@ -1,0 +1,23 @@
+# EFS配置示例（AI大模型训练/推理场景）
+
+aws_region = "cn-north-1"   # EFS所在区域，如北京：cn-north-1
+vpc_id     = "vpc-xxxxxxx"  # EFS所在VPC的ID
+subnet_ids = [               # EFS挂载目标所在子网ID，建议填写所有可用区的子网ID，实现高可用
+  "subnet-aaa",
+  "subnet-bbb",
+  "subnet-ccc"
+]
+efs_name   = "ai-efs"       # EFS文件系统名称
+performance_mode = "maxIO"  # 性能模式，AI大模型建议maxIO（高并发），普通场景可用generalPurpose
+throughput_mode  = "provisioned" # 吞吐模式，AI大模型建议provisioned（固定），普通场景可用bursting
+provisioned_throughput_in_mibps = 1024 # 吞吐量，单位MiB/s，provisioned模式下必填
+encrypted = true             # 是否启用EFS加密，建议开启
+
+# 备份与复制
+enable_backup = true         # 是否启用EFS自动备份，建议生产环境开启
+backup_policy = "AUTOMATIC" # 备份策略，默认自动每日备份
+backup_schedule_expression = "cron(0 5 * * ? *)" # 备份计划表达式，cron语法，示例为每天UTC 5点自动备份。详见AWS Backup计划文档
+
+enable_replication = false   # 是否启用EFS跨区域复制，AI高可用/灾备场景可开启
+replication_destination_region = "us-west-2" # 目标区域，仅enable_replication为true时必填
+replication_destination_kms_key = "" # 目标区域KMS密钥ARN（可选）
